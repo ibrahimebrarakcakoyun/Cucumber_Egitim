@@ -13,10 +13,26 @@ senayoryoyu çalıştırabiliriz.
 @RunWith(Cucumber.class)
 
 // Senaryoların nerede ve nasıl çalışacağı, hangi raporu kullanacağıyla alakalı seçenekleri ayarlarız
-@CucumberOptions(features = "src/test/resources/features/day30_IlkFeature",
+@CucumberOptions(
+                    plugin = {"pretty","html:src/test/resources/features/htmlReport/cucumber.html",
+                                        "json:src/test/resources/features/htmlReport/cucumber.json",
+                                        "junit:src/test/resources/features/htmlReport/cucumber.xml"}, // plugin ifadesi ile pretty ifadesi kullanılırsa konsolda scenario'lar ile ilgil ibilgi gösterir.
+
+                    features = "src/test/resources/features/day30_IlkFeature",
+
                     glue = {"techproed/stepDefinitions"}, // Bu parametre ile kodlarımızı yazdığımız stepDefinitin
                                                         // class'ının package'ını belirtiriz
-                    tags = "@gr1")
+                    tags = "@ilk",
+                    dryRun = false, // dryRun=false Test e-adımlarını kontrol eder ve Browser'ı çalıştırır.
+                                    // dryRun=true test adımlarını sadece kontrol eder.
+                                    // default olarak false'tur
+
+                    monochrome = true // pretty ifadesinden sonra monochrome=true kullanırsal senaryo adımlarını
+                                        // tek renk olarak siyah gösterir. monochrome=false kullanırsak renkli gösterir.
+
+
+
+)
 
 //features ===> features'ların olduğu dosyanın yolunu ver(ContentRoot)
 //        glue ====> stepDefinition'ların olduğu dosyanın yolunu ver(Source Root)
