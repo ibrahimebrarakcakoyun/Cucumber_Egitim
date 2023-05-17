@@ -15,14 +15,15 @@ senayoryoyu çalıştırabiliriz.
 // Senaryoların nerede ve nasıl çalışacağı, hangi raporu kullanacağıyla alakalı seçenekleri ayarlarız
 @CucumberOptions(
                     plugin = {"pretty","html:src/test/resources/features/htmlReport/cucumberHooks.html",
-                                        "json:src/test/resources/features/htmlReport/cucumber.json",
-                                        "junit:src/test/resources/features/htmlReport/cucumber.xml"}, // plugin ifadesi ile pretty ifadesi kullanılırsa konsolda scenario'lar ile ilgil ibilgi gösterir.
-
+                            "json:target/json-reports/cucumber.json",
+                                        "junit:src/test/resources/features/htmlReport/cucumber.xml", // plugin ifadesi ile pretty ifadesi kullanılırsa konsolda scenario'lar ile ilgil ibilgi gösterir.
+                            "rerun:TestOutput/failed_scenario.txt",
+                            "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, // rerun->fail olan senaryoları belirtilen yoldaki txt dosya içinde gösterir
                     features = "src/test/resources/features",
 
                     glue = {"techproed/stepDefinitions"}, // Bu parametre ile kodlarımızı yazdığımız stepDefinitin
                                                         // class'ının package'ını belirtiriz
-                    tags = "@hooks",
+                    tags = "@techpro1",
                     dryRun = false, // dryRun=false Test e-adımlarını kontrol eder ve Browser'ı çalıştırır.
                                     // dryRun=true test adımlarını sadece kontrol eder.
                                     // default olarak false'tur
@@ -41,3 +42,4 @@ senayoryoyu çalıştırabiliriz.
 
 public class Runner {
 }
+

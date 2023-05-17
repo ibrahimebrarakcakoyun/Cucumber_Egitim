@@ -16,4 +16,35 @@ Cucumber projesi oluşturmak istediğimizde yapmamız gereken adımlar:
 
 6- feature file'lar için resources package'i altında features isminde bir package daha oluştururuz
 
-7- features package'ı üstüne gelip sağ tık
+7- features package'ı üstüne gelip sağ tıklayıp new file ile feature uzantılı file oluşturalım
+
+--Parallel Testing--
+1-Parallel testing yapabilmek için öncelikle sure-fire plugin'i pom.xml dosyamıza eklememiz gerekiyor.
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>2</threadCount> <!--aynı anda 2 browser çalıştırılacağı anlamına gelir. -->
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <forkCount>2</forkCount> <!-- iki ayrı işlemi başlatır ve her biri farklı bir test paketi çalıştırır. Bu, testlerin daha hızlı tamamlanmasını sağlar. Ancak, bu ayarın artırılması, sistemin kaynaklarını tüketebilir ve performans sorunlarına neden olabilir. -->
+                    <reuseForks>true</reuseForks> <!--Maven önceki testlerde oluşturulmuş işlemleri yeniden kullanır -->
+                    <includes>
+                        <include>**/runners/*Runner*.java</include>
+                    </includes>
+                    <testFailureIgnore>true</testFailureIgnore> <!--testin başarısız olmasına rağmen diğer testlere devam eder ve sonunda tüm testleri çalıştırır. -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+2- Aynı anda iki farklı scenario çalıştırabilmek için bir tane daha Runner1 isiminde class oluşturduk
+(3 farklı scenario çalıştırmak istersek 3 adet runner class`i olmali)
+3-tags parametresine hangi scenario'ları çalıştıracaksak onları belirttik.
+4- Terminali acarak mvn clean (targeti siler) verify (toparlar ve testleri calistirir) ayni anda scenario`larimizi run ederiz.
+
+(Yada sag taraftaki maven -> lifecycle-> once -> clean'i iki kere tikliyoruz target gidiyor sonra-> verfy iki kere tikliyoruz target tekrar olusuyor)
